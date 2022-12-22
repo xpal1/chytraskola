@@ -1,0 +1,3172 @@
+openapi: 3.0.0
+info:
+  title: chytraskola
+  description: You can obtain JWT token from login API
+  version: 0.1
+servers:
+  - url: http://localhost:3000/api
+    description: Local server for testing
+paths:
+  /login:
+    post:
+      summary: Login API
+      security: []   # No security
+      tags:
+        - Security
+      requestBody:
+        content:
+          application/json:
+            schema:      # Request body contents
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+              example:   # Sample object
+                username: admin
+                password: 62f264d7ad826f02a8af714c0a54b197935b717656b80461686d450f7b3abde4c553541515de2052b9af70f710f0cd8a1a2d3f4d60aa72608d71a63a9a93c0f5
+      responses:
+        '200':
+          description: OK
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  /verifyToken:
+    post:
+      summary: Verify token API
+      security: [] #No security
+      tags:
+        - Security
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  /changePassword:
+    post:
+      summary: Change password API
+      tags:
+        - Security
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                passwordNew:
+                  type: string
+                passwordOld:
+                  type: string
+      responses:
+        '200':
+          description: OK
+                
+
+  #-----  User  -----
+  /user/{id}/changePassword:
+    post:
+      summary: Change password of user from admin
+      tags:
+        - User
+      responses:
+        "200":
+          description: OK
+    
+  /user/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - User
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mail:
+                  type: string
+                name:
+                  type: string
+                password:
+                  type: string
+                roles:
+                  type: string
+                surname:
+                  type: string
+                username:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - User
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+    
+  /user/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+    
+  #-----  dochadzka  -----
+  /dochadzka/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - dochadzka
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/dochadzka"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                datum:
+                  type: integer
+                predmet:
+                  type: string
+                status:
+                  type: string
+                student:
+                  type: string
+                trieda:
+                  type: string
+                ucitel:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - dochadzka
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/dochadzka"
+    
+  /dochadzka/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - dochadzka
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - dochadzka
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/dochadzka"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - dochadzka
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/dochadzka"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/dochadzka"
+    
+  /dochadzka/findBy_triedy/{key}:
+    get:
+      summary: CRUD ACTION findBy_triedy
+      tags:
+        - dochadzka
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/dochadzka"
+    
+  /dochadzka/findBy_ucitel/{key}:
+    get:
+      summary: CRUD ACTION findBy_ucitel
+      tags:
+        - dochadzka
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/dochadzka"
+    
+  #-----  odbory  -----
+  /odbory/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - odbory
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/odbory"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                forma_studia:
+                  type: string
+                kod:
+                  type: string
+                nazov:
+                  type: string
+                orientacia:
+                  type: string
+                popis:
+                  type: string
+                ucebny_plan:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - odbory
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/odbory"
+    
+  /odbory/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - odbory
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - odbory
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/odbory"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - odbory
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/odbory"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/odbory"
+    
+  #-----  predmety  -----
+  /predmety/findBy_triedy/{key}:
+    get:
+      summary: CRUD ACTION findBy_triedy
+      tags:
+        - predmety
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/predmety"
+    
+  /predmety/findBy_ucitel/{key}:
+    get:
+      summary: CRUD ACTION findBy_ucitel
+      tags:
+        - predmety
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/predmety"
+    
+  /predmety/:
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - predmety
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/predmety"
+    
+  #-----  rodicia  -----
+  /rodicia/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - rodicia
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/rodicia"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                datum_narodenia:
+                  type: integer
+                email:
+                  type: string
+                meno:
+                  type: string
+                mobil:
+                  type: string
+                povolanie:
+                  type: string
+                priezvisko:
+                  type: string
+                student:
+                  type: string
+                vztah_student:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - rodicia
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/rodicia"
+    
+  /rodicia/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - rodicia
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - rodicia
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/rodicia"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - rodicia
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/rodicia"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/rodicia"
+    
+  /rodicia/findBy_student/{key}:
+    get:
+      summary: CRUD ACTION findBy_student
+      tags:
+        - rodicia
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/rodicia"
+    
+  #-----  rozvrh  -----
+  /rozvrh/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - rozvrh
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/rozvrh"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cas_vyucovanie:
+                  type: string
+                den:
+                  type: string
+                predmet:
+                  type: string
+                skupina:
+                  type: string
+                trieda:
+                  type: string
+                ucitel:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - rozvrh
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/rozvrh"
+    
+  /rozvrh/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - rozvrh
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - rozvrh
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/rozvrh"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - rozvrh
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/rozvrh"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/rozvrh"
+    
+  /rozvrh/findBy_skupina/{key}:
+    get:
+      summary: CRUD ACTION findBy_skupina
+      tags:
+        - rozvrh
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/rozvrh"
+    
+  /rozvrh/findBy_triedy/{key}:
+    get:
+      summary: CRUD ACTION findBy_triedy
+      tags:
+        - rozvrh
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/rozvrh"
+    
+  /rozvrh/findBy_ucitel/{key}:
+    get:
+      summary: CRUD ACTION findBy_ucitel
+      tags:
+        - rozvrh
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/rozvrh"
+    
+  /rozvrh/findBy_vyucovanie_cas/{key}:
+    get:
+      summary: CRUD ACTION findBy_vyucovanie_cas
+      tags:
+        - rozvrh
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/rozvrh"
+    
+  #-----  skola  -----
+  /skola/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - skola
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/skola"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                adresa:
+                  type: string
+                datum_zalozenia:
+                  type: integer
+                dic:
+                  type: string
+                email:
+                  type: string
+                facebook:
+                  type: string
+                ico:
+                  type: string
+                instagram:
+                  type: string
+                logo:
+                  type: object
+                mobil:
+                  type: string
+                nazov:
+                  type: string
+                riaditel:
+                  type: string
+                veduca_sj:
+                  type: string
+                web:
+                  type: string
+                zastupca_riaditela:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - skola
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/skola"
+    
+  /skola/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - skola
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - skola
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/skola"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - skola
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/skola"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/skola"
+    
+  #-----  skupina  -----
+  /skupina/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - skupina
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/skupina"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nazov:
+                  type: string
+                student:
+                  type: string
+                trieda:
+                  type: string
+                ucitel:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - skupina
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/skupina"
+    
+  /skupina/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - skupina
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - skupina
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/skupina"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - skupina
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/skupina"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/skupina"
+    
+  /skupina/findBy_triedy/{key}:
+    get:
+      summary: CRUD ACTION findBy_triedy
+      tags:
+        - skupina
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/skupina"
+    
+  /skupina/findBy_ucitel/{key}:
+    get:
+      summary: CRUD ACTION findBy_ucitel
+      tags:
+        - skupina
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/skupina"
+    
+  #-----  spravy_archiv  -----
+  /spravy_archiv/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - spravy_archiv
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/spravy_archiv"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                datum_cas:
+                  type: integer
+                prijemca:
+                  type: string
+                prilohy:
+                  type: object
+                skupina:
+                  type: string
+                text:
+                  type: string
+                uzivatel:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - spravy_archiv
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/spravy_archiv"
+    
+  /spravy_archiv/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - spravy_archiv
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - spravy_archiv
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/spravy_archiv"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - spravy_archiv
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/spravy_archiv"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/spravy_archiv"
+    
+  /spravy_archiv/findBy_spravy_skupina/{key}:
+    get:
+      summary: CRUD ACTION findBy_spravy_skupina
+      tags:
+        - spravy_archiv
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/spravy_archiv"
+    
+  /spravy_archiv/findBy_spravy_uzivatelia/{key}:
+    get:
+      summary: CRUD ACTION findBy_spravy_uzivatelia
+      tags:
+        - spravy_archiv
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/spravy_archiv"
+    
+  #-----  spravy_skupiny  -----
+  /spravy_skupiny/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - spravy_skupiny
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/spravy_skupiny"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                datum_cas:
+                  type: integer
+                prilohy:
+                  type: object
+                skupina:
+                  type: string
+                text:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - spravy_skupiny
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/spravy_skupiny"
+    
+  /spravy_skupiny/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - spravy_skupiny
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - spravy_skupiny
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/spravy_skupiny"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - spravy_skupiny
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/spravy_skupiny"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/spravy_skupiny"
+    
+  /spravy_skupiny/findBy_skupina/{key}:
+    get:
+      summary: CRUD ACTION findBy_skupina
+      tags:
+        - spravy_skupiny
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/spravy_skupiny"
+    
+  #-----  spravy_uzivatelia  -----
+  /spravy_uzivatelia/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - spravy_uzivatelia
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/spravy_uzivatelia"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                datum_cas:
+                  type: integer
+                prijemca:
+                  type: string
+                prilohy:
+                  type: object
+                text:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - spravy_uzivatelia
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/spravy_uzivatelia"
+    
+  /spravy_uzivatelia/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - spravy_uzivatelia
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - spravy_uzivatelia
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/spravy_uzivatelia"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - spravy_uzivatelia
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/spravy_uzivatelia"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/spravy_uzivatelia"
+    
+  #-----  student  -----
+  /student/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - student
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/student"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                adresa:
+                  type: string
+                datum_narodenia:
+                  type: integer
+                email:
+                  type: string
+                fotografia:
+                  type: object
+                meno:
+                  type: string
+                mobil:
+                  type: string
+                odbor:
+                  type: string
+                pohlavie:
+                  type: string
+                priezvisko:
+                  type: string
+                skupina:
+                  type: string
+                trieda:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - student
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/student"
+    
+  /student/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - student
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - student
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/student"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - student
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/student"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/student"
+    
+  /student/findBy_dochazka/{key}:
+    get:
+      summary: CRUD ACTION findBy_dochazka
+      tags:
+        - student
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/student"
+    
+  /student/findBy_odbory/{key}:
+    get:
+      summary: CRUD ACTION findBy_odbory
+      tags:
+        - student
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/student"
+    
+  /student/findBy_rodicia/{key}:
+    get:
+      summary: CRUD ACTION findBy_rodicia
+      tags:
+        - student
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/student"
+    
+  /student/findBy_skupina/{key}:
+    get:
+      summary: CRUD ACTION findBy_skupina
+      tags:
+        - student
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/student"
+    
+  /student/findBy_triedy/{key}:
+    get:
+      summary: CRUD ACTION findBy_triedy
+      tags:
+        - student
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/student"
+    
+  /student/findBy_uzivatel/{key}:
+    get:
+      summary: CRUD ACTION findBy_uzivatel
+      tags:
+        - student
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/student"
+    
+  #-----  triedy  -----
+  /triedy/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - triedy
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/triedy"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nazov:
+                  type: string
+                odbor:
+                  type: string
+                rocnik:
+                  type: string
+                skupina:
+                  type: string
+                student:
+                  type: string
+                ucitel:
+                  type: string
+                vznik_datum:
+                  type: integer
+                zanik_datum:
+                  type: integer
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - triedy
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/triedy"
+    
+  /triedy/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - triedy
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - triedy
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/triedy"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - triedy
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/triedy"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/triedy"
+    
+  /triedy/findBy_odbory/{key}:
+    get:
+      summary: CRUD ACTION findBy_odbory
+      tags:
+        - triedy
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/triedy"
+    
+  /triedy/findBy_skupina/{key}:
+    get:
+      summary: CRUD ACTION findBy_skupina
+      tags:
+        - triedy
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/triedy"
+    
+  /triedy/findBy_ucitel/{key}:
+    get:
+      summary: CRUD ACTION findBy_ucitel
+      tags:
+        - triedy
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/triedy"
+    
+  #-----  ucitel  -----
+  /ucitel/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - ucitel
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ucitel"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                adresa:
+                  type: string
+                datum_nastup:
+                  type: integer
+                datum_odchod:
+                  type: integer
+                email:
+                  type: string
+                meno:
+                  type: string
+                mobil:
+                  type: string
+                pohlavie:
+                  type: string
+                predmety:
+                  type: string
+                priezvisko:
+                  type: string
+                titul:
+                  type: string
+                trieda:
+                  type: string
+                zameranie:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - ucitel
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ucitel"
+    
+  /ucitel/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - ucitel
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - ucitel
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ucitel"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - ucitel
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ucitel"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ucitel"
+    
+  /ucitel/findBy_triedy/{key}:
+    get:
+      summary: CRUD ACTION findBy_triedy
+      tags:
+        - ucitel
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ucitel"
+    
+  /ucitel/findBy_uzivatel/{key}:
+    get:
+      summary: CRUD ACTION findBy_uzivatel
+      tags:
+        - ucitel
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ucitel"
+    
+  #-----  udalost  -----
+  /udalost/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - udalost
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/udalost"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                farba:
+                  type: string
+                koniec_cas:
+                  type: integer
+                koniec_datum:
+                  type: integer
+                nazov:
+                  type: string
+                popis:
+                  type: string
+                typ:
+                  type: string
+                zaciatok_cas:
+                  type: integer
+                zaciatok_datum:
+                  type: integer
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - udalost
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/udalost"
+    
+  /udalost/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - udalost
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - udalost
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/udalost"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - udalost
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/udalost"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/udalost"
+    
+  #-----  uzivatel  -----
+  /uzivatel/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - uzivatel
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uzivatel"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                datum_aktualizacia:
+                  type: integer
+                datum_vznik:
+                  type: integer
+                heslo:
+                  type: string
+                meno:
+                  type: string
+                rola:
+                  type: string
+                status:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - uzivatel
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/uzivatel"
+    
+  /uzivatel/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - uzivatel
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - uzivatel
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uzivatel"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - uzivatel
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/uzivatel"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/uzivatel"
+    
+  #-----  vyucovanie_cas  -----
+  /vyucovanie_cas/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - vyucovanie_cas
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/vyucovanie_cas"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cas_od_do:
+                  type: string
+                poradie_hodiny:
+                  type: number
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - vyucovanie_cas
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/vyucovanie_cas"
+    
+  /vyucovanie_cas/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - vyucovanie_cas
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - vyucovanie_cas
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/vyucovanie_cas"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - vyucovanie_cas
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/vyucovanie_cas"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/vyucovanie_cas"
+    
+  #-----  zadania  -----
+  /zadania/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - zadania
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/zadania"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                datum_odovzdania:
+                  type: integer
+                datum_vytvorenia:
+                  type: integer
+                nazov:
+                  type: string
+                overenie:
+                  type: boolean
+                popis:
+                  type: string
+                predmet:
+                  type: string
+                prilohy:
+                  type: object
+                skupina:
+                  type: string
+                trieda:
+                  type: string
+                typ:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - zadania
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/zadania"
+    
+  /zadania/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - zadania
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - zadania
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/zadania"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - zadania
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/zadania"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/zadania"
+    
+  /zadania/findBy_skupina/{key}:
+    get:
+      summary: CRUD ACTION findBy_skupina
+      tags:
+        - zadania
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/zadania"
+    
+  /zadania/findBy_triedy/{key}:
+    get:
+      summary: CRUD ACTION findBy_triedy
+      tags:
+        - zadania
+      parameters:
+        - name: key
+          in: path
+          description: Id of model to search for
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/zadania"
+    
+  /zadania/{id}/overenie:
+    post:
+      summary: API na overenie zadania
+      security: []   # No security
+      tags:
+        - zadania
+      parameters:
+        - name: id
+          in: path
+          description: ID zadania
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    
+  #-----  znamky  -----
+  /znamky/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - znamky
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/znamky"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cislo:
+                  type: number
+                poznamka:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - znamky
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/znamky"
+    
+  /znamky/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - znamky
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - znamky
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/znamky"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - znamky
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/znamky"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/znamky"
+    
+    
+  #-----  User  -----
+  /Users/{id}/changePassword:
+    post:
+      summary: Change password by admin API
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                passwordNew:
+                  type: string
+                passwordAdmin:
+                  type: string
+      responses:
+        '200':
+          description: OK
+  /Users/{id}:
+    post:
+      summary: Update User API
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+    delete:
+      summary: Delete User API
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  /Users:
+    post:
+      summary: Create User API
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: 'string'
+                password: 
+                  type: 'string'
+                mail: 
+                  type: 'string'
+                name: 
+                  type: 'string'
+                surname: 
+                  type: 'string'
+                roles: 
+                  type: array
+                  items:
+                    type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    
+# JWT security
+security:
+  - bearerAuth: [] 
+  
+  
+# Components
+components:
+
+  # Security
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+
+  # Data Model
+  schemas:
+    User:
+      properties:
+        username:
+          type: 'string'
+        password: 
+          type: 'string'
+        mail: 
+          type: 'string'
+        name: 
+          type: 'string'
+        surname: 
+          type: 'string'
+        roles: 
+          type: array
+          items:
+            type: string
+      required:
+        - username
+        - password
+        
+
+    User:
+      properties:
+        _id:
+          type: string
+        mail:
+          type: string
+        name:
+          type: string
+        password:
+          type: string
+        roles:
+          type: string
+        surname:
+          type: string
+        username:
+          type: string
+      required:
+        -  _id
+        - password
+        - username
+      
+    
+    dochadzka:
+      properties:
+        _id:
+          type: string
+        datum:
+          type: integer
+        predmet:
+          type: string
+        status:
+          type: string
+        student:
+          type: string
+        trieda:
+          type: string
+        ucitel:
+          type: string
+      required:
+        -  _id
+      
+    
+    odbory:
+      properties:
+        _id:
+          type: string
+        forma_studia:
+          type: string
+        kod:
+          type: string
+        nazov:
+          type: string
+        orientacia:
+          type: string
+        popis:
+          type: string
+        ucebny_plan:
+          type: string
+      required:
+        -  _id
+      
+    
+    predmety:
+      properties:
+        _id:
+          type: string
+        nazov:
+          type: string
+        trieda:
+          type: string
+        typ:
+          type: string
+        ucitel:
+          type: string
+      required:
+        -  _id
+      
+    
+    rodicia:
+      properties:
+        _id:
+          type: string
+        datum_narodenia:
+          type: integer
+        email:
+          type: string
+        meno:
+          type: string
+        mobil:
+          type: string
+        povolanie:
+          type: string
+        priezvisko:
+          type: string
+        student:
+          type: string
+        vztah_student:
+          type: string
+      required:
+        -  _id
+      
+    
+    rozvrh:
+      properties:
+        _id:
+          type: string
+        cas_vyucovanie:
+          type: string
+        den:
+          type: string
+        predmet:
+          type: string
+        skupina:
+          type: string
+        trieda:
+          type: string
+        ucitel:
+          type: string
+      required:
+        -  _id
+      
+    
+    skola:
+      properties:
+        _id:
+          type: string
+        adresa:
+          type: string
+        datum_zalozenia:
+          type: integer
+        dic:
+          type: string
+        email:
+          type: string
+        facebook:
+          type: string
+        ico:
+          type: string
+        instagram:
+          type: string
+        logo:
+          type: object
+        mobil:
+          type: string
+        nazov:
+          type: string
+        riaditel:
+          type: string
+        veduca_sj:
+          type: string
+        web:
+          type: string
+        zastupca_riaditela:
+          type: string
+      required:
+        -  _id
+      
+    
+    skupina:
+      properties:
+        _id:
+          type: string
+        nazov:
+          type: string
+        student:
+          type: string
+        trieda:
+          type: string
+        ucitel:
+          type: string
+      required:
+        -  _id
+      
+    
+    spravy_archiv:
+      properties:
+        _id:
+          type: string
+        datum_cas:
+          type: integer
+        prijemca:
+          type: string
+        prilohy:
+          type: object
+        skupina:
+          type: string
+        text:
+          type: string
+        uzivatel:
+          type: string
+      required:
+        -  _id
+      
+    
+    spravy_skupiny:
+      properties:
+        _id:
+          type: string
+        datum_cas:
+          type: integer
+        prilohy:
+          type: object
+        skupina:
+          type: string
+        text:
+          type: string
+      required:
+        -  _id
+      
+    
+    spravy_uzivatelia:
+      properties:
+        _id:
+          type: string
+        datum_cas:
+          type: integer
+        prijemca:
+          type: string
+        prilohy:
+          type: object
+        text:
+          type: string
+      required:
+        -  _id
+      
+    
+    student:
+      properties:
+        _id:
+          type: string
+        adresa:
+          type: string
+        datum_narodenia:
+          type: integer
+        email:
+          type: string
+        fotografia:
+          type: object
+        meno:
+          type: string
+        mobil:
+          type: string
+        odbor:
+          type: string
+        pohlavie:
+          type: string
+        priezvisko:
+          type: string
+        skupina:
+          type: string
+        trieda:
+          type: string
+      required:
+        -  _id
+        - meno
+        - priezvisko
+      
+    
+    triedy:
+      properties:
+        _id:
+          type: string
+        nazov:
+          type: string
+        odbor:
+          type: string
+        rocnik:
+          type: string
+        skupina:
+          type: string
+        student:
+          type: string
+        ucitel:
+          type: string
+        vznik_datum:
+          type: integer
+        zanik_datum:
+          type: integer
+      required:
+        -  _id
+      
+    
+    ucitel:
+      properties:
+        _id:
+          type: string
+        adresa:
+          type: string
+        datum_nastup:
+          type: integer
+        datum_odchod:
+          type: integer
+        email:
+          type: string
+        meno:
+          type: string
+        mobil:
+          type: string
+        pohlavie:
+          type: string
+        predmety:
+          type: string
+        priezvisko:
+          type: string
+        titul:
+          type: string
+        trieda:
+          type: string
+        zameranie:
+          type: string
+      required:
+        -  _id
+        - meno
+        - priezvisko
+      
+    
+    udalost:
+      properties:
+        _id:
+          type: string
+        farba:
+          type: string
+        koniec_cas:
+          type: integer
+        koniec_datum:
+          type: integer
+        nazov:
+          type: string
+        popis:
+          type: string
+        typ:
+          type: string
+        zaciatok_cas:
+          type: integer
+        zaciatok_datum:
+          type: integer
+      required:
+        -  _id
+      
+    
+    uzivatel:
+      properties:
+        _id:
+          type: string
+        datum_aktualizacia:
+          type: integer
+        datum_vznik:
+          type: integer
+        heslo:
+          type: string
+        meno:
+          type: string
+        rola:
+          type: string
+        status:
+          type: string
+      required:
+        -  _id
+        - heslo
+        - meno
+      
+    
+    vyucovanie_cas:
+      properties:
+        _id:
+          type: string
+        cas_od_do:
+          type: string
+        poradie_hodiny:
+          type: number
+      required:
+        -  _id
+      
+    
+    zadania:
+      properties:
+        _id:
+          type: string
+        datum_odovzdania:
+          type: integer
+        datum_vytvorenia:
+          type: integer
+        nazov:
+          type: string
+        overenie:
+          type: boolean
+        popis:
+          type: string
+        predmet:
+          type: string
+        prilohy:
+          type: object
+        skupina:
+          type: string
+        trieda:
+          type: string
+        typ:
+          type: string
+      required:
+        -  _id
+      
+    
+    znamky:
+      properties:
+        _id:
+          type: string
+        cislo:
+          type: number
+        poznamka:
+          type: string
+      required:
+        -  _id
+      
+    
